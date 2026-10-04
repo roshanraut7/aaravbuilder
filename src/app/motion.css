@@ -1,0 +1,115 @@
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 100%;
+  background: var(--bright);
+  transform: scaleX(0);
+  transform-origin: left center;
+  z-index: 80;
+  pointer-events: none;
+}
+.motion-controls {
+  position: fixed;
+  bottom: 18px;
+  right: 20px;
+  z-index: 55;
+  display: flex;
+  align-items: center;
+  background: #29231eee;
+  border: 1px solid #bba07866;
+  border-radius: 50px;
+  box-shadow: 0 4px 20px #0000001a;
+  backdrop-filter: blur(12px);
+  color: #f5e9d4;
+  padding: 4px;
+}
+.motion-controls button {
+  border: 0;
+  background: transparent;
+  color: inherit;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 12px;
+  min-height: 35px;
+  font-size: 9px;
+  border-radius: 50px;
+  white-space: nowrap;
+}
+.motion-controls button:hover {
+  background: #ffffff12;
+}
+.motion-controls svg {
+  color: #ed985b;
+}
+.motion-controls-divider {
+  width: 1px;
+  height: 16px;
+  background: #aa8b6650;
+}
+html[data-motion="full"] .marquee-track {
+  animation: service-marquee 25s linear infinite;
+}
+html[data-motion="full"] .hero-seal > svg:first-child {
+  animation: seal-spin 22s linear infinite;
+}
+html[data-motion="full"] .strip-star {
+  animation: seal-spin 14s linear infinite;
+}
+html[data-motion="full"] .hero-note {
+  animation: note-float 5s ease-in-out 2s infinite;
+}
+html[data-motion="full"] .expertise-strip:hover .marquee-track {
+  animation-play-state: paused;
+}
+html[data-motion="reduced"] .hero-image {
+  transform: scale(1.08) !important;
+}
+html[data-motion="reduced"] .hero-note {
+  transform: rotate(-2deg);
+}
+html[data-motion="reduced"] .process-progress {
+  transform: scaleX(1);
+}
+@keyframes service-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+@keyframes seal-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes note-float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-2deg);
+  }
+  50% {
+    transform: translateY(-12px) rotate(0deg);
+  }
+}
+@media (max-width: 760px) {
+  .motion-controls {
+    bottom: 12px;
+    right: 12px;
+  }
+  .motion-controls button {
+    padding: 8px 10px;
+    font-size: 8px;
+    gap: 6px;
+    min-height: 34px;
+  }
+  .replay-label {
+    display: none;
+  }
+  html[data-motion="full"] .marquee-track {
+    animation-duration: 23s;
+  }
+}
