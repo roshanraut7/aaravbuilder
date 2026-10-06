@@ -1,6 +1,6 @@
 # Aarav Builder & IT Solution
 
-A responsive Next.js App Router website for civil construction, website development, and mobile applications. Construction-inspired cream, charcoal, and orange design with TypeScript, GSAP ScrollTrigger, Lenis smooth scrolling, and React Bits BlurText / RotatingText. See `DESIGN-NOTES.md` for the reference analysis and implemented changes.
+A responsive Next.js App Router website for civil construction, website development, and mobile applications. Construction-inspired white, warm ivory, and orange design with TypeScript, GSAP ScrollTrigger, Lenis smooth scrolling, and React Bits BlurText / RotatingText. See `DESIGN-NOTES.md` for the reference analysis and implemented changes.
 
 ## Run locally
 
@@ -23,7 +23,7 @@ npm start
 - Page content, service offerings, concept previews, FAQs, and enquiry form: `src/components/aarav-site.tsx`, rendered through `src/app/page.tsx`.
 - Design and responsive styles: `src/app/site.css`; motion styles: `src/app/motion.css`.
 - Scroll animations: `src/components/motion-provider.tsx`.
-- The bottom-right motion control pauses/resumes decorative animation. Replay returns to the hero and runs its entrance again. The site follows the system reduced-motion preference unless a visitor explicitly overrides it; that choice is stored locally.
+- Animations run automatically and follow the system reduced-motion preference. Motion and Replay controls have been removed, along with their saved browser preference overrides.
 - Copy `.env.example` to `.env.local`, set `NEXT_PUBLIC_CONTACT_EMAIL` to the real business email, and restart/rebuild. The enquiry form generates a downloadable brief and, when configured, opens the visitor's email app with that brief. It does **not** submit to a backend, database, or email delivery service.
 - All project previews are explicitly labeled illustrative concepts. Replace them with actual project images and descriptions when available.
 - No invented business phone number, address, client count, or testimonial is included.

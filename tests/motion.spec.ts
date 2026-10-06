@@ -1,9 +1,13 @@
 import { test, expect } from "@playwright/test";
 
-test("motion visibly runs, pauses, persists and can be replayed", async ({
+test("motion runs automatically without visible motion controls", async ({
   page,
 }) => {
   await page.emulateMedia({ reducedMotion: "no-preference" });
+  // A preference saved by the removed control must not silently disable motion.
+  await page.addInitScript(() =>
+    localStorage.setItem("aarav-motion", "reduced"),
+  );
   await page.goto("/");
   await expect(page.locator("html")).toHaveAttribute("data-motion", "full");
   const marquee = page.locator(".marquee-track");
@@ -17,20 +21,9 @@ test("motion visibly runs, pauses, persists and can be replayed", async ({
   await expect(
     page.locator(".hero-rotating .text-rotate-sr-only"),
   ).not.toHaveText(initialWord!, { timeout: 5500 });
-  await page
-    .getByRole("button", { name: "Pause animations", exact: true })
-    .click();
-  await expect(page.locator("html")).toHaveAttribute("data-motion", "reduced");
-  await expect(page.locator(".hero-rotating")).toHaveCount(0);
-  expect(
-    await marquee.evaluate((el) => getComputedStyle(el).animationName),
-  ).toBe("none");
-  await page.reload();
   await expect(
-    page.getByRole("button", { name: "Play animations", exact: true }),
-  ).toBeVisible();
-  await page.getByRole("button", { name: "Replay intro animation" }).click();
-  await expect(page.locator("html")).toHaveAttribute("data-motion", "full");
+    page.getByRole("button", { name: /animations|replay/i }),
+  ).toHaveCount(0);
   await expect(page.locator(".hero-line-inner").first()).toHaveCSS(
     "opacity",
     "1",
@@ -38,7 +31,7 @@ test("motion visibly runs, pauses, persists and can be replayed", async ({
   await expect(page.locator(".hero-rotating")).toBeVisible();
 });
 
-test("system reduced motion stays still until explicitly enabled", async ({
+test("animation follows changes to the system reduced-motion preference", async ({
   page,
 }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
@@ -49,9 +42,7 @@ test("system reduced motion stays still until explicitly enabled", async ({
       .locator(".marquee-track")
       .evaluate((el) => getComputedStyle(el).animationName),
   ).toBe("none");
-  await page
-    .getByRole("button", { name: "Play animations", exact: true })
-    .click();
+  await page.emulateMedia({ reducedMotion: "no-preference" });
   await expect(page.locator("html")).toHaveAttribute("data-motion", "full");
   expect(
     await page

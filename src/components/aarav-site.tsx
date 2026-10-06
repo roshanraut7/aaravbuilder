@@ -24,113 +24,175 @@ import {
   Ruler,
   HardHat,
   Monitor,
+  ShoppingCart,
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
 import MotionProvider from "./motion-provider";
-import MotionControls from "./motion-controls";
 import RotatingText from "./rotating-text";
 import BlurText from "./blur-text";
 import { useMotionPreference } from "./motion-preference";
+import CircularGallery from "./circular-gallery";
 
 const email = process.env.NEXT_PUBLIC_CONTACT_EMAIL;
 const services = [
   {
-    title: "Civil & Construction",
-    label: "BUILD SOMETHING LASTING",
-    image: "framing",
-    alt: "Timber framework of a house under construction",
-    text: "From the first foundation to the final finish. Thoughtful homes and commercial spaces, built around the way you live and work.",
-    tags: ["Residential", "Commercial", "Site supervision"],
-    icon: Building2,
-  },
-  {
-    title: "Websites & Mobile Apps",
-    label: "TURN IDEAS INTO EXPERIENCES",
-    image: "web",
-    alt: "Laptop and development workspace",
-    text: "Beautiful websites. Intuitive apps. Digital experiences that help your business connect, work smarter, and move forward.",
-    tags: ["Web development", "Android & iOS", "E-commerce"],
-    icon: Code2,
-  },
-  {
-    title: "Planning & Design",
-    label: "EVERY DETAIL CONSIDERED",
+    title: "Naksha / Building Design",
+    category: "civil",
     image: "construction",
-    alt: "Architect developing a building plan",
-    text: "Practical layouts and considered architectural designs. A clear plan before the first brick is laid.",
-    tags: ["Architecture", "Planning"],
+    alt: "Architect working on a detailed building plan",
+    text: "Floor plans, architectural planning, and clear 2D and 3D building designs shaped around your site.",
     icon: Ruler,
   },
   {
-    title: "Renovation & Interiors",
-    label: "A FRESH PERSPECTIVE",
+    title: "Interior Design",
+    category: "civil",
     image: "interior",
-    alt: "Warm contemporary interior with natural materials",
-    text: "Give your space a new chapter with better layouts, thoughtful materials, and beautiful finishes.",
-    tags: ["Remodeling", "Interiors"],
+    alt: "Premium modern living room interior",
+    text: "Functional and elegant interior concepts for homes, offices, retail, and commercial spaces.",
     icon: Layers3,
   },
   {
-    title: "UI/UX & Digital Support",
-    label: "MADE TO WORK BEAUTIFULLY",
+    title: "Building & Construction",
+    category: "civil",
+    image: "framing",
+    alt: "Active residential construction site",
+    text: "Reliable residential and commercial construction, from groundwork through project execution.",
+    icon: HardHat,
+  },
+  {
+    title: "3D Exterior Visualization",
+    category: "civil",
+    image: "residence",
+    alt: "Photorealistic modern residential exterior",
+    text: "Realistic exterior renders that help you understand materials, scale, and form before construction.",
+    icon: Building2,
+  },
+  {
+    title: "Renovation & Remodeling",
+    category: "civil",
+    image: "architecture",
+    alt: "Renovated modern residential property",
+    text: "Thoughtful home, office, and commercial renovations that improve function, comfort, and finish.",
+    icon: Layers3,
+  },
+  {
+    title: "Site Planning & Consultation",
+    category: "civil",
+    image: "site",
+    alt: "Civil engineer reviewing plans at a construction site",
+    text: "Professional site inspection, early planning, feasibility guidance, and practical project advice.",
+    icon: Compass,
+  },
+  {
+    title: "Web Development",
+    category: "it",
+    image: "web",
+    alt: "Laptop displaying a clean modern website",
+    text: "Fast business websites, corporate sites, portals, and web apps built for real business goals.",
+    icon: Code2,
+  },
+  {
+    title: "Mobile App Development",
+    category: "it",
+    image: "mobile",
+    alt: "Smartphones displaying a modern mobile application",
+    text: "Useful and intuitive Android and iOS applications designed around your customers and operations.",
+    icon: Smartphone,
+  },
+  {
+    title: "UI/UX Design",
+    category: "it",
     image: "workspace",
-    alt: "Bright creative workspace",
-    text: "User-focused design, useful integrations, and ongoing support for the digital tools you depend on.",
-    tags: ["UI/UX", "Maintenance"],
+    alt: "Digital interface design displayed on a monitor",
+    text: "User-focused web and mobile interfaces that make complex journeys feel clear and effortless.",
     icon: PenTool,
+  },
+  {
+    title: "Custom Software Development",
+    category: "it",
+    image: "web",
+    alt: "Business dashboard and software interface",
+    text: "Business-specific software, dashboards, and management systems tailored to your workflow.",
+    icon: Monitor,
+  },
+  {
+    title: "E-commerce Development",
+    category: "it",
+    image: "mobile",
+    alt: "Online store displayed across laptop and mobile devices",
+    text: "Complete online stores with payments, product management, and a smooth customer experience.",
+    icon: ShoppingCart,
+  },
+  {
+    title: "Website Maintenance & Support",
+    category: "it",
+    image: "workspace",
+    alt: "Developer monitoring website performance",
+    text: "Ongoing performance checks, updates, fixes, security care, and dependable technical support.",
+    icon: ShieldCheck,
   },
 ];
 const gallery = [
   {
-    title: "Spaces made for living.",
-    category: "civil",
-    image: "residence",
-    description:
-      "A residential design direction that brings natural light, open space, and thoughtful materials together.",
-    type: "Residential inspiration",
-  },
-  {
-    title: "From the ground up.",
-    category: "civil",
-    image: "framing",
-    description:
-      "A look at the structural craft behind a new home, from a clear plan to a carefully assembled frame.",
-    type: "Construction inspiration",
-  },
-  {
-    title: "Commerce, reimagined.",
+    title: "A restaurant worth discovering.",
     category: "digital",
-    image: "web",
+    image: "gallery-restaurant-website.png",
     description:
-      "A website direction focused on clear navigation, purposeful design, and a smooth shopping experience.",
-    type: "Website concept",
+      "An elegant restaurant website concept that brings the menu, atmosphere, and reservation journey together across every screen.",
+    type: "Restaurant website",
+    service: "Web Development",
   },
   {
-    title: "Room for something new.",
-    category: "civil",
-    image: "interior",
-    description:
-      "A warm interior direction that balances everyday practicality with considered finishes.",
-    type: "Interior inspiration",
-  },
-  {
-    title: "Everyday, simplified.",
+    title: "Every classroom, connected.",
     category: "digital",
-    image: "mobile",
+    image: "gallery-school-management.png",
     description:
-      "A mobile app direction for bringing the tasks that matter into one clear and intuitive experience.",
-    type: "Mobile app concept",
+      "A bright school management platform for attendance, schedules, academic progress, teachers, and everyday administration.",
+    type: "School management system",
+    service: "Custom Software Development",
   },
   {
-    title: "Built around your people.",
-    category: "civil",
-    image: "workspace",
+    title: "People and work, simplified.",
+    category: "digital",
+    image: "gallery-employee-management.png",
     description:
-      "A welcoming workspace direction that makes room for focus, collaboration, and growth.",
-    type: "Commercial inspiration",
+      "A clear employee management dashboard for teams, attendance, leave, payroll insights, and performance.",
+    type: "Employee management system",
+    service: "Custom Software Development",
+  },
+  {
+    title: "Commerce that feels effortless.",
+    category: "digital",
+    image: "gallery-ecommerce-website.png",
+    description:
+      "A refined e-commerce experience with responsive product discovery, product details, cart, and checkout journeys.",
+    type: "E-commerce website",
+    service: "E-commerce Development",
+  },
+  {
+    title: "Interiors made to belong.",
+    category: "civil",
+    image: "gallery-interior-design.png",
+    description:
+      "A warm contemporary interior shaped through natural stone, timber, soft textures, and carefully layered light.",
+    type: "Interior design",
+    service: "Interior Design",
+  },
+  {
+    title: "Built with confidence.",
+    category: "civil",
+    image: "gallery-construction.png",
+    description:
+      "A modern construction project brought to life through sound planning, professional oversight, and precise execution.",
+    type: "Building and construction",
+    service: "Building & Construction",
   },
 ];
+const circularGalleryItems = gallery.map((project) => ({
+  image: `/images/${project.image}`,
+  text: project.title,
+}));
 const faqs = [
   [
     "What types of projects do you take on?",
@@ -158,13 +220,9 @@ const faqs = [
   ],
 ];
 
-function Logo({ light = false }: { light?: boolean }) {
+function Logo() {
   return (
-    <a
-      href="#home"
-      className={`brand ${light ? "brand-light" : ""}`}
-      aria-label="Aarav home"
-    >
+    <a href="#home" className="brand" aria-label="Aarav home">
       <span className="brand-emblem">
         <svg viewBox="0 0 62 54" fill="none" aria-hidden="true">
           <path
@@ -236,14 +294,23 @@ function Seal() {
 export default function AaravSite() {
   const { enabled } = useMotionPreference();
   const [menuOpen, setMenuOpen] = useState(false);
-  const [filter, setFilter] = useState("all");
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
-  const [service, setService] = useState("Civil & Construction");
+  const [service, setService] = useState("Naksha / Building Design");
+  const [serviceCategory, setServiceCategory] = useState<"civil" | "it">(
+    "civil",
+  );
+  const [showAllServices, setShowAllServices] = useState(false);
   const [brief, setBrief] = useState("");
   const [faq, setFaq] = useState<number | null>(0);
   const dialogRef = useRef<HTMLDialogElement>(null);
   const projectTrigger = useRef<HTMLButtonElement | null>(null);
   const selected = selectedIndex === null ? null : gallery[selectedIndex];
+  const categoryServices = services.filter(
+    (item) => item.category === serviceCategory,
+  );
+  const visibleServices = showAllServices
+    ? categoryServices
+    : categoryServices.slice(0, 3);
   useEffect(() => {
     if (selectedIndex !== null) dialogRef.current?.showModal();
   }, [selectedIndex]);
@@ -272,7 +339,6 @@ export default function AaravSite() {
   return (
     <div className="site-shell">
       <MotionProvider />
-      <MotionControls />
       <a href="#main" className="skip-link">
         Skip to content
       </a>
@@ -288,7 +354,7 @@ export default function AaravSite() {
             <a href="#work">Gallery</a>
             <a href="#contact">Contact</a>
           </nav>
-          <a className="button button-dark nav-cta" href="#contact">
+          <a className="button button-primary nav-cta" href="#contact">
             Let’s build together <ArrowUpRight size={15} />
           </a>
           <button
@@ -379,10 +445,10 @@ export default function AaravSite() {
                 something built to last.
               </p>
               <div className="hero-actions">
-                <a href="#contact" className="button button-dark">
+                <a href="#contact" className="button button-primary">
                   Start your project <ArrowUpRight size={17} />
                 </a>
-                <a href="#services" className="button button-orange">
+                <a href="#services" className="button button-outline">
                   Explore our services <ArrowDown size={16} />
                 </a>
               </div>
@@ -446,7 +512,7 @@ export default function AaravSite() {
         </div>
 
         <section
-          className="services-section dark-section section"
+          className="services-section surface-section section"
           id="services"
         >
           <div className="container">
@@ -456,16 +522,46 @@ export default function AaravSite() {
                 <h2>OUR SERVICES</h2>
               </div>
               <p data-reveal>
-                We build in two worlds, with one shared purpose.
-                <br />
-                From <em>homes and workspaces</em> to <em>websites and apps</em>
-                —<br className="wide-break" /> thoughtful work, done right.
+                From architectural ideas to digital products, we design, build,
+                and deliver solutions for both <em>physical and digital spaces.</em>
               </p>
             </div>
-            <div className="services-grid">
-              {services.map((item, index) => (
+            <div
+              className="service-tabs"
+              role="tablist"
+              aria-label="Service categories"
+              data-reveal
+            >
+              {[
+                { value: "civil" as const, label: "Civil Engineering", icon: Building2 },
+                { value: "it" as const, label: "IT Solutions", icon: Code2 },
+              ].map(({ value, label, icon: Icon }) => (
+                <button
+                  key={value}
+                  type="button"
+                  role="tab"
+                  aria-selected={serviceCategory === value}
+                  aria-controls="services-panel"
+                  className={serviceCategory === value ? "active" : ""}
+                  onClick={() => {
+                    setServiceCategory(value);
+                    setShowAllServices(false);
+                  }}
+                >
+                  <Icon size={18} />
+                  {label}
+                </button>
+              ))}
+            </div>
+            <div
+              className="services-grid"
+              id="services-panel"
+              role="tabpanel"
+              aria-live="polite"
+            >
+              {visibleServices.map((item, index) => (
                 <article
-                  className={`service-card ${index < 2 ? "service-featured" : ""}`}
+                  className="service-card"
                   key={item.title}
                 >
                   <div className="service-image" data-image-reveal>
@@ -473,13 +569,12 @@ export default function AaravSite() {
                       src={`/images/${item.image}.jpg`}
                       alt={item.alt}
                       fill
-                      sizes={
-                        index < 2
-                          ? "(max-width: 760px) 100vw, 50vw"
-                          : "(max-width: 760px) 100vw, 33vw"
-                      }
+                      sizes="(max-width: 760px) 100vw, (max-width: 1100px) 50vw, 33vw"
                     />
-                    <span className="service-image-number">0{index + 1}</span>
+                    <span className="service-image-number">
+                      {serviceCategory === "civil" ? "CIVIL" : "IT"} · 0
+                      {index + 1}
+                    </span>
                     <span className="service-icon">
                       <item.icon size={22} />
                     </span>
@@ -487,40 +582,36 @@ export default function AaravSite() {
                   <div className="service-card-copy">
                     <div className="service-title">
                       <h3>{item.title}</h3>
-                      <a
-                        href="#contact"
-                        aria-label={`Enquire about ${item.title}`}
-                        onClick={() =>
-                          chooseService(
-                            index === 1
-                              ? "Website Development"
-                              : index === 4
-                                ? "Something else"
-                                : "Civil & Construction",
-                          )
-                        }
-                      >
-                        <ArrowUpRight size={20} />
-                      </a>
                     </div>
                     <p>{item.text}</p>
-                    <div className="service-tags">
-                      {item.tags.map((tag) => (
-                        <span key={tag}>{tag}</span>
-                      ))}
-                    </div>
+                    <a
+                      className="service-explore"
+                      href="#contact"
+                      aria-label={`Explore ${item.title}`}
+                      onClick={() => chooseService(item.title)}
+                    >
+                      Explore Service <ArrowRight size={17} />
+                    </a>
                   </div>
                 </article>
               ))}
             </div>
             <div className="section-bottom">
               <span>
-                ONE PARTNER. FROM YOUR FIRST BLUEPRINT TO YOUR NEXT
-                BREAKTHROUGH.
+                {showAllServices
+                  ? `SHOWING ALL ${serviceCategory === "civil" ? "CIVIL ENGINEERING" : "IT"} SERVICES.`
+                  : "THREE FOCUSED SERVICES. ONE EXPERIENCED PARTNER."}
               </span>
-              <a href="#contact" className="button button-cream">
-                Find your solution <ArrowUpRight size={16} />
-              </a>
+              <button
+                type="button"
+                className="button button-cream services-view-all"
+                aria-expanded={showAllServices}
+                aria-controls="services-panel"
+                onClick={() => setShowAllServices((current) => !current)}
+              >
+                {showAllServices ? "Show Featured Services" : "View All Services"}
+                <ArrowRight size={16} />
+              </button>
             </div>
           </div>
           <span className="section-watermark" aria-hidden="true">
@@ -644,7 +735,10 @@ export default function AaravSite() {
           </div>
         </section>
 
-        <section className="digital-section dark-section section" id="digital">
+        <section
+          className="digital-section surface-section section"
+          id="digital"
+        >
           <div className="container">
             <div className="center-heading" data-reveal>
               <Eyebrow>THE OTHER SIDE OF BUILDING</Eyebrow>
@@ -756,7 +850,7 @@ export default function AaravSite() {
                 <a
                   href="#contact"
                   className="button button-orange"
-                  onClick={() => chooseService("Website Development")}
+                  onClick={() => chooseService("Web Development")}
                 >
                   Let’s bring your idea online <ArrowUpRight size={17} />
                 </a>
@@ -812,70 +906,45 @@ export default function AaravSite() {
           </div>
         </section>
 
-        <section className="gallery-section dark-section section" id="work">
+        <section className="gallery-section surface-section section" id="work">
           <div className="container">
             <div className="section-heading">
               <div data-reveal>
                 <Eyebrow>A WORLD OF POSSIBILITIES</Eyebrow>
                 <h2>THE INSPIRATION GALLERY</h2>
               </div>
-              <div
-                className="filter-group"
-                aria-label="Filter project concepts"
-              >
-                {[
-                  ["all", "All concepts"],
-                  ["civil", "Civil"],
-                  ["digital", "Digital"],
-                ].map(([value, label]) => (
-                  <button
-                    key={value}
-                    aria-pressed={filter === value}
-                    className={filter === value ? "active" : ""}
-                    onClick={() => setFilter(value)}
-                  >
-                    {label}
-                  </button>
-                ))}
-              </div>
+              <span className="gallery-drag-note">DRAG / SCROLL TO EXPLORE</span>
             </div>
             <p className="gallery-caption">
               A few directions your next project could take. Reference imagery
               and concepts, ready for your vision.
             </p>
-            <div
-              className={`gallery-grid ${filter !== "all" ? "gallery-filtered" : ""}`}
-            >
-              {gallery.map(
-                (project, index) =>
-                  (filter === "all" || filter === project.category) && (
-                    <button
-                      className={`project-card gallery-card gallery-item-${index}`}
-                      key={project.title}
-                      onClick={(event) => {
-                        projectTrigger.current = event.currentTarget;
-                        setSelectedIndex(index);
-                      }}
-                      aria-label={`Explore ${project.title}`}
-                    >
-                      <div className="project-image">
-                        <Image
-                          src={`/images/${project.image}.jpg`}
-                          alt={project.type}
-                          fill
-                          sizes="(max-width: 760px) 100vw, 50vw"
-                        />
-                        <div className="gallery-overlay">
-                          <span>{project.type}</span>
-                          <strong>{project.title}</strong>
-                        </div>
-                        <span className="project-arrow">
-                          <ArrowUpRight size={21} />
-                        </span>
-                      </div>
-                    </button>
-                  ),
-              )}
+            <div className="circular-gallery-shell" data-lenis-prevent-wheel>
+              <CircularGallery
+                items={circularGalleryItems}
+                bend={2.2}
+                textColor="#231c14"
+                borderRadius={0.055}
+                font="700 30px Arial"
+                scrollSpeed={1.7}
+                scrollEase={0.06}
+              />
+            </div>
+            <div className="gallery-project-list" aria-label="Inspiration projects">
+              {gallery.map((project, index) => (
+                <button
+                  key={project.title}
+                  onClick={(event) => {
+                    projectTrigger.current = event.currentTarget;
+                    setSelectedIndex(index);
+                  }}
+                  aria-label={`Explore ${project.title}`}
+                >
+                  <span>{String(index + 1).padStart(2, "0")}</span>
+                  <strong>{project.title}</strong>
+                  <ArrowUpRight size={17} />
+                </button>
+              ))}
             </div>
             <div className="gallery-bottom">
               <span>YOUR PROJECT COULD BE THE NEXT CHAPTER.</span>
@@ -988,12 +1057,7 @@ export default function AaravSite() {
               <fieldset>
                 <legend>I’m interested in...</legend>
                 <div className="service-options">
-                  {[
-                    "Civil & Construction",
-                    "Website Development",
-                    "Mobile App",
-                    "Something else",
-                  ].map((value) => (
+                  {services.map(({ title: value }) => (
                     <button
                       key={value}
                       type="button"
@@ -1093,29 +1157,28 @@ export default function AaravSite() {
         </section>
       </main>
 
-      <footer className="dark-section">
+      <footer className="surface-section">
         <div className="container">
           <div className="footer-top">
-            <Logo light />
             <p>
               One team. Two disciplines. A world of possibilities.
               <br />
-              Thoughtfully designed. Carefully built. Proudly Aarav.
+              Thoughtfully designed. Carefully built. Made with purpose.
             </p>
             <a href="#home" className="back-top" aria-label="Back to top">
               <ArrowUpRight size={23} />
             </a>
           </div>
           <div className="footer-services">
-            <a href="#services">Construction</a>
+              <a href="#services">Civil Engineering</a>
             <span>✳</span>
-            <a href="#services">Architecture</a>
+              <a href="#services">Naksha Design</a>
             <span>✳</span>
-            <a href="#digital">Websites</a>
+              <a href="#services">Interior Design</a>
             <span>✳</span>
-            <a href="#digital">Mobile apps</a>
+              <a href="#digital">Web & Mobile</a>
             <span>✳</span>
-            <a href="#services">Interiors</a>
+              <a href="#services">Software Solutions</a>
           </div>
           <div className="footer-links">
             <div>
@@ -1126,7 +1189,7 @@ export default function AaravSite() {
             </div>
             <div>
               <span>OUR EXPERTISE</span>
-              <a href="#services">Civil & Construction</a>
+              <a href="#services">Civil Engineering & Design</a>
               <a href="#digital">IT & Digital Solutions</a>
               <a href="#process">Our process</a>
             </div>
@@ -1141,15 +1204,12 @@ export default function AaravSite() {
           </div>
           <div className="footer-bottom">
             <span>
-              © {new Date().getFullYear()} Aarav Builder & IT Solution.
+              © {new Date().getFullYear()} Builder & IT Solution. All rights reserved.
             </span>
             <span>Built with purpose. Designed for people.</span>
             <a href="#contact">
               Start a conversation <ArrowUpRight size={13} />
             </a>
-          </div>
-          <div className="footer-wordmark" aria-hidden="true">
-            AARAV<span>®</span>
           </div>
         </div>
       </footer>
@@ -1178,7 +1238,7 @@ export default function AaravSite() {
           <>
             <div className="dialog-image">
               <Image
-                src={`/images/${selected.image}.jpg`}
+                src={`/images/${selected.image}`}
                 alt={selected.type}
                 fill
                 sizes="800px"
@@ -1194,16 +1254,10 @@ export default function AaravSite() {
               </p>
               <div className="dialog-actions">
                 <a
-                  className="button button-dark"
+                  className="button button-primary"
                   href="#contact"
                   onClick={() => {
-                    chooseService(
-                      selected.category === "civil"
-                        ? "Civil & Construction"
-                        : selected.image === "mobile"
-                          ? "Mobile App"
-                          : "Website Development",
-                    );
+                    chooseService(selected.service);
                     dialogRef.current?.close();
                   }}
                 >

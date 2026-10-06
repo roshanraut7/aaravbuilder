@@ -35,12 +35,12 @@ test("page renders without errors or horizontal overflow", async ({
   expect(errors).toEqual([]);
 });
 
-test("concept filters, accessible dialog and FAQ work", async ({ page }) => {
+test("circular gallery, accessible dialog and FAQ work", async ({ page }) => {
   await page.goto("/");
-  await page.getByRole("button", { name: "Digital", exact: true }).click();
-  await expect(page.locator(".gallery-card")).toHaveCount(2);
+  await expect(page.locator(".circular-gallery canvas")).toBeVisible();
+  await page.getByRole("region", { name: /Interactive inspiration gallery/ }).press("ArrowRight");
   await page
-    .getByRole("button", { name: "Explore Commerce, reimagined." })
+    .getByRole("button", { name: "Explore Commerce that feels effortless." })
     .click();
   await expect(page.getByRole("dialog")).toBeVisible();
   await expect(page.getByRole("dialog")).toContainText(
@@ -48,16 +48,35 @@ test("concept filters, accessible dialog and FAQ work", async ({ page }) => {
   );
   await page.keyboard.press("Escape");
   await expect(page.getByRole("dialog")).not.toBeVisible();
-  await page.getByRole("button", { name: "Civil", exact: true }).click();
-  await expect(page.locator(".gallery-card")).toHaveCount(4);
-  await page.getByRole("button", { name: "All concepts", exact: true }).click();
-  await expect(page.locator(".gallery-card")).toHaveCount(6);
+  await expect(page.locator(".gallery-project-list button")).toHaveCount(6);
   const question = page.getByRole("button", {
     name: "How much will my project cost?",
   });
   await question.click();
   await expect(question).toHaveAttribute("aria-expanded", "true");
   await expect(page.locator("#faq-2")).toBeVisible();
+});
+
+test("service categories switch and reveal the full catalogue", async ({
+  page,
+}) => {
+  await page.goto("/");
+  const panel = page.locator("#services-panel");
+  const civilTab = page.getByRole("tab", { name: "Civil Engineering" });
+  const itTab = page.getByRole("tab", { name: "IT Solutions" });
+  await expect(civilTab).toHaveAttribute("aria-selected", "true");
+  await expect(panel.locator(".service-card")).toHaveCount(3);
+  await expect(panel).toContainText("Naksha / Building Design");
+  await itTab.click();
+  await expect(itTab).toHaveAttribute("aria-selected", "true");
+  await expect(panel.locator(".service-card")).toHaveCount(3);
+  await expect(panel).toContainText("Web Development");
+  const viewAll = page.locator(".services-view-all");
+  await expect(viewAll).toHaveText(/View All Services/);
+  await viewAll.click();
+  await expect(viewAll).toHaveAttribute("aria-expanded", "true");
+  await expect(panel.locator(".service-card")).toHaveCount(6);
+  await expect(panel).toContainText("Website Maintenance & Support");
 });
 
 test("service selection carries into a downloadable enquiry", async ({
@@ -68,7 +87,7 @@ test("service selection carries into a downloadable enquiry", async ({
     .getByRole("link", { name: "Let’s bring your idea online" })
     .click();
   await expect(
-    page.getByRole("button", { name: "Website Development", exact: true }),
+    page.getByRole("button", { name: "Web Development", exact: true }),
   ).toHaveAttribute("aria-pressed", "true");
   await page.getByLabel("Your name").fill("Test Visitor");
   await page.getByLabel("Email address").fill("visitor@example.com");
@@ -86,7 +105,7 @@ test("service selection carries into a downloadable enquiry", async ({
   const stream = await download.createReadStream();
   let contents = "";
   for await (const chunk of stream!) contents += chunk.toString();
-  expect(contents).toContain("Service: Website Development");
+  expect(contents).toContain("Service: Web Development");
   expect(contents).toContain("Test Visitor");
   await page.getByLabel("Your name").fill("Updated Visitor");
   await expect(page.locator(".brief-result")).toHaveCount(0);

@@ -17,9 +17,8 @@ export default function MotionProvider() {
     lenis.on("scroll", ScrollTrigger.update);
     const tick = (time: number) => lenis.raf(time * 1000);
     gsap.ticker.add(tick);
-    let intro: gsap.core.Timeline;
     const context = gsap.context(() => {
-      intro = gsap.timeline({ defaults: { ease: "power3.out" } });
+      const intro = gsap.timeline({ defaults: { ease: "power3.out" } });
       intro
         .fromTo(
           ".hero-line-inner",
@@ -132,11 +131,6 @@ export default function MotionProvider() {
         scrollTrigger: { start: 0, end: "max", scrub: 0.15 },
       });
     });
-    const replay = () => {
-      lenis.scrollTo(0, { immediate: true });
-      intro.restart();
-    };
-    window.addEventListener("aarav:replay-intro", replay);
     const refresh = () => ScrollTrigger.refresh();
     const resizeObserver = new ResizeObserver(refresh);
     const main = document.querySelector("main");
@@ -184,7 +178,6 @@ export default function MotionProvider() {
     return () => {
       cancelAnimationFrame(refreshFrame);
       resizeObserver.disconnect();
-      window.removeEventListener("aarav:replay-intro", replay);
       document.removeEventListener("pointermove", pointerMove);
       document.removeEventListener("pointerout", pointerOut);
       gsap.killTweensOf(".project-image");
