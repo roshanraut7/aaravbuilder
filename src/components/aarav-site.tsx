@@ -33,6 +33,7 @@ import RotatingText from "./rotating-text";
 import BlurText from "./blur-text";
 import { useMotionPreference } from "./motion-preference";
 import CircularGallery from "./circular-gallery";
+import Preloader from "./preloader";
 
 const email = process.env.NEXT_PUBLIC_CONTACT_EMAIL;
 const services = [
@@ -338,6 +339,7 @@ export default function AaravSite() {
 
   return (
     <div className="site-shell">
+      <Preloader />
       <MotionProvider />
       <a href="#main" className="skip-link">
         Skip to content

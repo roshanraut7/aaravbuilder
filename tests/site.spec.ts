@@ -1,5 +1,19 @@
 import { test, expect } from "@playwright/test";
 
+test("opening greeting introduces the Aarav brand and clears automatically", async ({
+  page,
+}) => {
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  await page.goto("/");
+  const intro = page.getByRole("status", {
+    name: "Welcome to Aarav Builder and IT Solution",
+  });
+  await expect(intro).toBeVisible();
+  await expect(intro).toContainText("Hello");
+  await expect(intro).toHaveCount(0, { timeout: 8000 });
+  await expect(page.locator("html")).not.toHaveClass(/intro-active/);
+});
+
 test("page renders without errors or horizontal overflow", async ({
   page,
 }, testInfo) => {
